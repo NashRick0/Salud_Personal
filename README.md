@@ -1,7 +1,5 @@
 # VitaTrack - Tu Acompañante de Hábitos Saludables
 
-![VitaTrack Logo](assets/icon.png)
-
 Aplicación móvil para el seguimiento de hábitos saludables, incluyendo ejercicio, nutrición, sueño y más.
 
 ## 🚀 Características
