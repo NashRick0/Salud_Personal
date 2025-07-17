@@ -18,10 +18,6 @@ Aplicación móvil para el seguimiento de hábitos saludables, incluyendo ejerci
 - Firebase (autenticación y base de datos)
 - React Navigation
 
-## 📱 Capturas de Pantalla
-
-[Incluye capturas de pantalla de tu aplicación]
-
 ## 🚀 Cómo Empezar
 
 ### Requisitos Previos
