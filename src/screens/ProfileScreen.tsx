@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert, TextInput, SafeAreaView, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert, TextInput, SafeAreaView, Image, StyleSheet, Switch } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from './../context/AuthContext';
 import { useData } from './../context/DataContext';
 import { commonStyles } from './../styles/main';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+    registerForPushNotificationsAsync,
+    scheduleDailyTipNotification,
+    cancelAllNotifications,
+} from '../services/notificationService';
 
 export function ProfileScreen() {
     const { user, logout } = useAuth();
@@ -14,6 +20,7 @@ export function ProfileScreen() {
     const [caloriesGoal, setCaloriesGoal] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
     useEffect(() => {
         if (userData?.goals) {
@@ -21,6 +28,13 @@ export function ProfileScreen() {
             setSleepGoal(userData.goals.sleep.toString());
             setCaloriesGoal(userData.goals.calories.toString());
         }
+        const loadNotificationSetting = async () => {
+            const storedSetting = await AsyncStorage.getItem('notificationsEnabled');
+            if (storedSetting !== null) {
+                setNotificationsEnabled(JSON.parse(storedSetting));
+            }
+        };
+        loadNotificationSetting();
     }, [userData]);
 
     const handleLogout = () => {
@@ -79,6 +93,26 @@ export function ProfileScreen() {
             Alert.alert("Error", "No se pudieron guardar los cambios. Por favor, inténtalo de nuevo.");
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleNotificationsToggle = async (value: boolean) => {
+        setNotificationsEnabled(value);
+        await AsyncStorage.setItem('notificationsEnabled', JSON.stringify(value));
+
+        if (value) {
+            const permissionGranted = await registerForPushNotificationsAsync();
+            if (permissionGranted) {
+                await scheduleDailyTipNotification();
+                Alert.alert('¡Notificaciones Activadas!', 'Recibirás un consejo saludable todos los días a las 9:00 AM.');
+            } else {
+                Alert.alert('Permiso Denegado', 'No se pudieron activar las notificaciones. Por favor, habilita los permisos en la configuración de tu dispositivo.');
+                setNotificationsEnabled(false); // Revert switch if permission is denied
+                await AsyncStorage.setItem('notificationsEnabled', JSON.stringify(false));
+            }
+        } else {
+            await cancelAllNotifications();
+            Alert.alert('Notificaciones Desactivadas', 'Ya no recibirás consejos diarios.');
         }
     };
 
@@ -176,6 +210,26 @@ export function ProfileScreen() {
                         ) : (
                             <Text style={styles.goalValue}>{caloriesGoal} <Text style={styles.unit}>kcal</Text></Text>
                         )}
+                    </View>
+                </View>
+
+                {/* Sección de Configuración */}
+                <View style={styles.sectionContainer}>
+                    <View style={styles.sectionHeader}>
+                        <Text style={styles.sectionTitle}>Configuración</Text>
+                    </View>
+                    <View style={styles.settingRow}>
+                        <View style={styles.settingLabelContainer}>
+                            <Ionicons name="notifications" size={24} color="#64748b" />
+                            <Text style={styles.settingLabel}>Notificaciones Diarias</Text>
+                        </View>
+                        <Switch
+                            trackColor={{ false: "#e2e8f0", true: "#86efac" }}
+                            thumbColor={notificationsEnabled ? "#22c55e" : "#f1f5f9"}
+                            ios_backgroundColor="#e2e8f0"
+                            onValueChange={handleNotificationsToggle}
+                            value={notificationsEnabled}
+                        />
                     </View>
                 </View>
 
@@ -327,26 +381,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingVertical: 14,
     },
-    menuItem: {
+    settingRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 8,
+    },
+    settingLabelContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: '#f1f5f9',
     },
-    menuIcon: {
-        width: 36,
-        height: 36,
-        borderRadius: 10,
-        backgroundColor: '#f8fafc',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 12,
-    },
-    menuText: {
-        flex: 1,
+    settingLabel: {
         fontSize: 16,
         color: '#334155',
+        marginLeft: 16,
     },
     logoutButton: {
         flexDirection: 'row',

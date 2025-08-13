@@ -289,17 +289,6 @@ export function SleepScreen() {
                         </View>
                     </View>
                 </View>
-                
-                {/* Consejo de Sueño */}
-                <View style={styles.tipCard}>
-                    <Ionicons name="moon" size={24} color="#8b5cf6" style={styles.tipIcon} />
-                    <View style={styles.tipContent}>
-                        <Text style={styles.tipTitle}>Consejo para Dormir Mejor</Text>
-                        <Text style={styles.tipText}>
-                            Mantén un horario regular de sueño, incluso los fines de semana, para ayudar a regular tu reloj biológico.
-                        </Text>
-                    </View>
-                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -652,33 +641,34 @@ const styles = StyleSheet.create({
         color: '#64748b',
     },
     tipCard: {
+        display: 'none',
+    },
+    tipIcon: {
+        display: 'none',
+    },
+    tipContent: {
+        display: 'none',
+    },
+    tipTitle: {
+        display: 'none',
+    },
+    tipText: {
+        display: 'none',
+    },
+    historyItem: {
+        backgroundColor: '#ffffff',
+        borderRadius: 12,
+    },
+    sectionContainer: {
         backgroundColor: '#ffffff',
         borderRadius: 16,
         padding: 20,
         marginHorizontal: 20,
-        marginBottom: 20,
-        flexDirection: 'row',
+        marginBottom: 16,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
         shadowRadius: 8,
         elevation: 2,
-    },
-    tipIcon: {
-        marginRight: 16,
-    },
-    tipContent: {
-        flex: 1,
-    },
-    tipTitle: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#1e293b',
-        marginBottom: 6,
-    },
-    tipText: {
-        fontSize: 14,
-        color: '#64748b',
-        lineHeight: 20,
     },
 });

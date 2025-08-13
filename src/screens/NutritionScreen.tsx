@@ -268,17 +268,6 @@ export function NutritionScreen() {
                         </View>
                     </View>
                 </View>
-                
-                {/* Consejo de Nutrición */}
-                <View style={styles.tipCard}>
-                    <Ionicons name="nutrition" size={24} color="#f59e0b" style={styles.tipIcon} />
-                    <View style={styles.tipContent}>
-                        <Text style={styles.tipTitle}>Consejo de Nutrición</Text>
-                        <Text style={styles.tipText}>
-                            Incluye una variedad de frutas y verduras en tus comidas para obtener una amplia gama de nutrientes esenciales.
-                        </Text>
-                    </View>
-                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -647,33 +636,22 @@ const styles = StyleSheet.create({
         color: '#64748b',
     },
     tipCard: {
-        backgroundColor: '#ffffff',
-        borderRadius: 16,
-        padding: 20,
-        marginHorizontal: 20,
-        marginBottom: 20,
-        flexDirection: 'row',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
-        elevation: 2,
+        display: 'none',
     },
     tipIcon: {
-        marginRight: 16,
+        display: 'none',
     },
     tipContent: {
-        flex: 1,
+        display: 'none',
     },
     tipTitle: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#1e293b',
-        marginBottom: 6,
+        display: 'none',
     },
     tipText: {
-        fontSize: 14,
-        color: '#64748b',
-        lineHeight: 20,
+        display: 'none',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
     },
 });

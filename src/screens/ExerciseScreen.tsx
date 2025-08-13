@@ -143,17 +143,6 @@ export function ExerciseScreen() {
                         </View>
                     </View>
                 </View>
-                
-                {/* Consejo del Día */}
-                <View style={styles.tipCard}>
-                    <Ionicons name="bulb" size={24} color="#f59e0b" style={styles.tipIcon} />
-                    <View style={styles.tipContent}>
-                        <Text style={styles.tipTitle}>Consejo del Día</Text>
-                        <Text style={styles.tipText}>
-                            Realizar al menos 30 minutos de ejercicio moderado al día puede mejorar significativamente tu salud cardiovascular.
-                        </Text>
-                    </View>
-                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -402,33 +391,39 @@ const styles = StyleSheet.create({
         color: '#64748b',
     },
     tipCard: {
+        display: 'none',
+    },
+    tipIcon: {
+        display: 'none',
+    },
+    tipContent: {
+        display: 'none',
+    },
+    tipTitle: {
+        display: 'none',
+    },
+    tipText: {
+        display: 'none',
+    },
+    sectionHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    sectionContainer: {
         backgroundColor: '#ffffff',
         borderRadius: 16,
         padding: 20,
         marginHorizontal: 20,
-        marginBottom: 20,
-        flexDirection: 'row',
+        marginBottom: 16,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
         shadowRadius: 8,
         elevation: 2,
     },
-    tipIcon: {
-        marginRight: 16,
-    },
-    tipContent: {
-        flex: 1,
-    },
-    tipTitle: {
-        fontSize: 16,
+    sectionTitle: {
+        fontSize: 18,
         fontWeight: '600',
         color: '#1e293b',
-        marginBottom: 6,
-    },
-    tipText: {
-        fontSize: 14,
-        color: '#64748b',
-        lineHeight: 20,
     },
 });
