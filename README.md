@@ -44,3 +44,20 @@ Aplicación móvil para el seguimiento de hábitos saludables, incluyendo ejerci
 4. Inicia la aplicación:
    ```bash
    npm start
+
+## ☁️ Despliegue en Vercel
+
+1. Asegúrate de que la app web funcione localmente:
+   ```bash
+   npm run web
+   ```
+
+2. Sube el proyecto a GitHub.
+
+3. En Vercel, importa el repositorio y configura:
+   - Build command: `npm run vercel-build`
+   - Output directory: `web-build`
+
+4. Si usas rutas en la app, Vercel debe reenviar todas las rutas a `index.html`. Ya hay un archivo `vercel.json` para eso.
+
+5. Agrega tus variables de entorno en Vercel si usas Firebase u otros servicios.
